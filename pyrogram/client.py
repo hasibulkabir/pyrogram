@@ -273,7 +273,10 @@ class Client(Methods):
 
         self.message_cache = Cache(10000)
 
-        self.loop = asyncio.get_event_loop()
+        try:
+            self.loop = asyncio.get_event_loop()
+        except RuntimeError:
+            self.loop = pyrogram.main_event_loop
 
     def __enter__(self):
         return self.start()

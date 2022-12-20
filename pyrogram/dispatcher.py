@@ -55,7 +55,10 @@ class Dispatcher:
 
     def __init__(self, client: "pyrogram.Client"):
         self.client = client
-        self.loop = asyncio.get_event_loop()
+        try:
+            self.loop = asyncio.get_event_loop()
+        except RuntimeError:
+            self.loop = pyrogram.main_event_loop
 
         self.handler_worker_tasks = []
         self.locks_list = []
